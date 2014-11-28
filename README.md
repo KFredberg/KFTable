@@ -1,0 +1,4 @@
+KFTable
+=======
+
+Qlik Sense extension
