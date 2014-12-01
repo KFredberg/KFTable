@@ -1,4 +1,4 @@
-define(["jquery", "text!./kftable.css", "translator", "general.utils/property-resolver", "general.utils/number-formatting" ,"util", "qlik","./d3"], function($, cssContent, translator, pResolver, numFormatting, util , qlik) {'use strict';
+define(["jquery", "text!./kftable.css", "translator", "general.utils/property-resolver", "general.utils/number-formatting" ,"util", "qlik","./d3", "./components/kfMeasureList","./components/kfModifierList"], function($, cssContent ,translator, pResolver, numFormatting, util , qlik) {'use strict';
 	$("<style>").html(cssContent).appendTo("head");
 
 	function updateMeasures(object, data) {
@@ -77,6 +77,15 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 					qHeight : 100
 				}]
 			},
+			kfMeasure : {
+				sortableOptions : {
+					onMove: function(a,b) {
+						console.log("onMove");
+						console.log(a);
+						console.log(b);
+					}	
+				}
+			},
 			KFDimensions : [],
 			selectionMode : "CONFIRM"
 		},
@@ -108,16 +117,18 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 						}, 
 						kfMeasureList: 	{
 							type: "array",
+							component : "kfMeasureList",
+							//sourceType: kfMeasure,
 							translation: "Row measures",
 							ref: "kfMeasureList",
 							min: 1,
 							allowAdd: true,
 							allowRemove: true,
-							allowMove: false,
+							allowMove: true,
 							addTranslation: "Add row measure",
 							grouped: true,
-							sourceType: "kfMeasure",
 							itemTitleRef: "label",
+							ppPath: "kfMeasureList",
 							items: {
 								rowLabel: {
 									type: "string",
@@ -316,15 +327,16 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 				},
 				kfmodifiers: 	{
 					type: "array",
+					component : "kfModifierList",
 					translation: "Column modifiers",
 					ref: "kfModifierList",
 					min: 1,
 					allowAdd: true,
 					allowRemove: true,
-					allowMove: false,
+					allowMove: true,
 					addTranslation: "Add column modifier",
 					grouped: true,
-					sourceType: "kfModifier",
+					ppPath: "kfModifierList",
 					itemTitleRef: "label",
 					items: {
 						modifierLabel: {
@@ -695,7 +707,8 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 		},
 		paint : function($element, layout) {
 
-
+			console.log("layout");
+			console.log(layout);
 
 			var getColumnNumbers = function(s) {
 			  var r=/column\((.*?)\)/gi, a=[], m;
@@ -763,6 +776,8 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 														});
 					});
 				});
+				console.log("reply");
+				console.log(reply);
 				me.backendApi.setProperties(reply);
 			}); 
 			
