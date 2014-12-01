@@ -42,6 +42,7 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 
 				filterSetExpression += ">}"
 
+
 				pResolver.setValue(kfMod, "kfFilterSetExpression", filterSetExpression);
 
 			});
@@ -49,7 +50,6 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 			return true;
 		}
 
-		
 	function l(b, d) {
 			return pResolver.getValue(b, "qNumFormat.qFmt") === numFormatting.getDefaultNumericFormat(b.qNumFormat, d ? d.localeInfo : "")
 		}
@@ -134,8 +134,6 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 									label : "Measure",
 									defaultValue : "",
 									change : function(a,b) {
-											console.log(a);
-											console.log(b);
 											if (a.label == '') {
 												a.label = a.qDef
 											};
@@ -311,7 +309,6 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 											return updateMeasures(a,b);
 							},
 							remove : function(a,b,c) {
-											console.log("measure remove:");
 											return updateMeasures(a,c);
 							}
 						}
@@ -355,9 +352,6 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 							show: true,
 							defaultValue: 1,
 							change : function(a,b) {
-									console.log("modifier type change:");
-									console.log(a);
-									console.log(b);
 									if (a.kfSet == "") {
 										pResolver.setValue(a, "kfSet", a.kfFilterSetExpression); 
 			        				};
@@ -371,9 +365,6 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 							label : "Set",
 							defaultValue : "",
 							show: function(a) {
-								console.log("show set:");
-								console.log(a);
-								console.log(a.kfModifierType == 0);
 								return (a.kfModifierType == 0);
 							},
 							change : function(a,b) {
@@ -453,7 +444,6 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 									show: true,
 									defaultValue: 1,
 									change : function(a,b) {
-										console.log("updateFilterType");
 										updateFilterExpression(a,b);
 										return updateFilterSetExpression(a,b);
 									}
@@ -662,11 +652,9 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 						}
 					},
 					change : function(a,b) {
-									console.log("modifier change:");
 									return updateMeasures(a,b);
 					},
 					remove : function(a,b,c) {
-									console.log("modifier remove:");
 									return updateMeasures(a,c);
 					}
 				},
@@ -707,6 +695,8 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 		},
 		paint : function($element, layout) {
 
+
+
 			var getColumnNumbers = function(s) {
 			  var r=/column\((.*?)\)/gi, a=[], m;
 			  while (m = r.exec(s)) {
@@ -728,17 +718,17 @@ define(["jquery", "text!./kftable.css", "translator", "general.utils/property-re
 						var modifierLength = reply.kfModifierList.length;
 						
 						if (!kfMea.kfMeasuresType) {
-							qDefString = qDefString.replace(/Sum\(/g, "Sum(#Set ")
-										 .replace(/Avg\(/g, "Avg(#Set ")
-										 .replace(/Count\(/g, "Count(#Set ")
-										 .replace(/Max\(/g, "Max(#Set ")
-										 .replace(/Min\(/g, "Min(#Set ");
+							qDefString = qDefString.replace(/Sum\(/gi, "Sum(#Set ")
+										 .replace(/Avg\(/gi, "Avg(#Set ")
+										 .replace(/Count\(/gi, "Count(#Set ")
+										 .replace(/Max\(/gi, "Max(#Set ")
+										 .replace(/Min\(/gi, "Min(#Set ");
 						};
 
 						switch(kfMod.kfModifierType) {
 	    					case 0: //set
-						        qDefString = qDefString.replace(/#set/gi,"{$< #filters >}")
-						        					   .replace(/#filters/gi,kfMod.kfSet.replace("{$<","")).replace(">}","");
+	    						qDefString = qDefString.replace(/#set/gi,"{$< #filters >}")
+						        					   .replace(/#filters/gi,kfMod.kfSet.substring(3,kfMod.kfSet.length - 2));
 						        break;
 						    case 1: //filter set
 						    	qDefString = qDefString.replace(/#set/gi,"{$< #filters >}")
