@@ -1,0 +1,51 @@
+.qv-object-kftable div.qv-object-content-container {
+	overflow: auto;
+}
+.qv-object-kftable td, th {
+	border-top: 0px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	cursor: default;
+	font-size: 12px;
+}
+.qv-object-kftable td.numeric {
+	text-align: right;
+}
+.qv-object-kftable button {
+	width: 100%;
+}
+
+/* colors when NOT in selection mode
+.qv-object-kftable td.stateS, .qv-object-horizlist td.stateL {
+	background-image: linear-gradient(top, #52cc52, #4dc04d);
+	background-image: -o-linear-gradient(top, #52cc52, #4dc04d);
+	background-image: -moz-linear-gradient(top, #52cc52, #4dc04d);
+	background-image: -webkit-linear-gradient(top, #52cc52, #4dc04d);
+	background-image: -ms-linear-gradient(top, #52cc52, #4dc04d);
+	color: #fff;
+}
+
+.qv-object-kftable td.stateX, .qv-object-kftable td.stateXL, .qv-object-kftable td.stateXS {
+	background-color: #A9A9A9;
+	color: #fff;
+}
+*/
+
+/* colors when in selection mode*/
+.qv-object-kftable td.stateA, .qv-object-kftable.qv-selections-active td {
+	background-image: none;
+	background-color: #ddd;
+	color: #000;
+}
+.qv-object-kftable.qv-object-kftable td.selected {
+	background-image: linear-gradient(top, #52cc52, #4dc04d);
+	background-image: -o-linear-gradient(top, #52cc52, #4dc04d);
+	background-image: -moz-linear-gradient(top, #52cc52, #4dc04d);
+	background-image: -webkit-linear-gradient(top, #52cc52, #4dc04d);
+	background-image: -ms-linear-gradient(top, #52cc52, #4dc04d);
+	color: #fff;
+}
